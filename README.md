@@ -1,46 +1,28 @@
 # generator-sass [![Build Status](https://secure.travis-ci.org/iamcarrico/generator-sass.png?branch=master)](https://travis-ci.org/iamcarrico/generator-sass)
 
-> [Yeoman](http://yeoman.io) generator
+The Sass generator is a little bit different than other generators. Instead of using it as a stand-alone generator, it's meant to be called from other generators to add Sassy magic to your project. Each sub-generator available provides a different aspect of integrating Sass into your project.
 
+## Installation
 
-## Getting Started
+Your generators need at least `"yeoman-generator": "~0.17.0",` as a minimum development requirement. You also should add `"generator-sass": "<0.1.0"` as a `peerDependency` to your project. The Sass generator relies upon Yeoman's [composability](http://yeoman.io/authoring/composability.html), and boy is it magic.
 
-### What is Yeoman?
+## Usage
 
-Trick question. It's not a thing. It's this guy:
+Each sub-generator has a series of options. Each option will try and get the [config](http://yeoman.io/authoring/storage.html) saved for any given option. If an option is passed in via composability, that will override the saved config. Any options that are not stored in config or passed in the user will be prompted for. Each option will be saved to config regardless of how it got there.
 
-![](http://i.imgur.com/JHaAlBJ.png)
+### `sass:structure`
 
-Basically, he wears a top hat, lives in your computer, and waits for you to tell him what kind of application you wish to create.
+This will build a Sass file structure, including full files, partials, and and empty folders you may want to start scaffolded out. The following options are available:
 
-Not every new computer comes with a Yeoman pre-installed. He lives in the [npm](https://npmjs.org) package repository. You only have to ask for him once, then he packs up and moves into your hard drive. *Make sure you clean up, he likes new and shiny things.*
+* `syntax` - Sass syntax to use. Can either be `sass` or `scss`
+* `base` - Base level Sass folder, where all Sass files will be placed. Usually `sass`
+* `files` - An array full files (not partials) to be created. Can be nested. No need to include file extension.
+* `fileTemplate` - Path to template file for use with all files. Available variables: `fileName`. Recommendation: store your template in your generator's `templates` file and use `this.sourceRoot() + '/_template.scss'` for the path.
+* `partials` - An array of partials to be created. Can be nested. No need to include leading `_` or file extension.
+* `partialTemplate` - Path to template file for use with all partials. Available variables: `fileName`. Recommendation: store your template in your generator's `templates` file and use `this.sourceRoot() + '/_template.scss'` for the path.
+* `folders` - An array of folders to be created.
 
-```bash
-$ npm install -g yo
-```
-
-### Yeoman Generators
-
-Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
-
-To install generator-sass from npm, run:
-
-```bash
-$ npm install -g generator-sass
-```
-
-Finally, initiate the generator:
-
-```bash
-$ yo sass
-```
-
-### Getting To Know Yeoman
-
-Yeoman has a heart of gold. He's a person with feelings and opinions, but he's very easy to work with. If you think he's too opinionated, he can be easily convinced.
-
-If you'd like to get to know Yeoman better and meet some of his friends, [Grunt](http://gruntjs.com) and [Bower](http://bower.io), check out the complete [Getting Started Guide](https://github.com/yeoman/yeoman/wiki/Getting-Started).
-
+[Example usage](https://github.com/north/generator-north/blob/master/sass/index.js)
 
 ## License
 
