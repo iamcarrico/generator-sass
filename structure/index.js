@@ -68,6 +68,27 @@ var SassGenerator = yeoman.generators.Base.extend({
     else if (this.options.folders) {
       this.folders = this.options.folders;
     }
+
+    //////////////////////////////
+    // Template Files
+    //////////////////////////////
+    this.fileTemplate = null;
+
+    if (this.config.get['folders']) {
+      this.fileTemplate = this.config.get['folders'];
+    }
+    else if (this.options.fileTemplate) {
+      this.fileTemplate = this.options.fileTemplate;
+    }
+
+    this.partialTemplate = null;
+    if (this.config.get['folders']) {
+      this.partialTemplate = this.config.get['folders'];
+    }
+    else if (this.options.partialTemplate) {
+      this.partialTemplate = this.options.partialTemplate;
+    }
+
   },
 
   prompts: function () {
@@ -161,7 +182,17 @@ var SassGenerator = yeoman.generators.Base.extend({
   buildFiles: function () {
     var base = this.base + '/',
         syntax = this.syntax,
+        fileTemplate = '_file.scss',
+        partialTemplate = '_partial.scss',
         _this = this;
+
+    if (this.fileTemplate) {
+      fileTemplate = path.relative(this.sourceRoot(), this.fileTemplate);
+    }
+
+    if (this.partialTemplate) {
+      partialTemplate = path.relative(this.sourceRoot(), this.partialTemplate);
+    }
 
     //////////////////////////////
     // Files
@@ -178,10 +209,10 @@ var SassGenerator = yeoman.generators.Base.extend({
         _this.fileName = _s.humanize(filename);
 
         if (ext === '.sass' || ext === '.scss') {
-          _this.template('_file.scss', base + filename)
+          _this.template(fileTemplate, base + filename)
         }
         else {
-          _this.template('_file.scss', base + filename + '.' + syntax);
+          _this.template(fileTemplate, base + filename + '.' + syntax);
         }
       }
     });
@@ -209,13 +240,13 @@ var SassGenerator = yeoman.generators.Base.extend({
           file = file.slice(1, file.length);
         }
 
-        this.fileName = _s.humanize(filename);
+        _this.fileName = _s.humanize(filename);
 
         if (ext === '.sass' || ext === '.scss') {
-          _this.template('_partial.scss', base + file)
+          _this.template(partialTemplate, base + file)
         }
         else {
-          _this.template('_partial.scss', base + file + '.' + syntax);
+          _this.template(partialTemplate, base + file + '.' + syntax);
         }
       }
     });
