@@ -17,7 +17,7 @@ var SassGenerator = yeoman.generators.Base.extend({
     if (this.config.get['syntax']) {
       this.syntax = this.config.get['syntax'];
     }
-    else if (this.options.syntax) {
+    if (this.options.syntax) {
       this.syntax = this.options.syntax;
     }
 
@@ -29,7 +29,7 @@ var SassGenerator = yeoman.generators.Base.extend({
     if (this.config.get['base']) {
       this.base = this.config.get['base'];
     }
-    else if (this.options.base) {
+    if (this.options.base) {
       this.base = this.options.base;
     }
 
@@ -41,7 +41,7 @@ var SassGenerator = yeoman.generators.Base.extend({
     if (this.config.get['files']) {
       this.files = this.config.get['files'];
     }
-    else if (this.options.files) {
+    if (this.options.files) {
       this.files = this.options.files;
     }
 
@@ -53,7 +53,7 @@ var SassGenerator = yeoman.generators.Base.extend({
     if (this.config.get['partials']) {
       this.partials = this.config.get['partials'];
     }
-    else if (this.options.partials) {
+    if (this.options.partials) {
       this.partials = this.options.partials;
     }
 
@@ -65,7 +65,7 @@ var SassGenerator = yeoman.generators.Base.extend({
     if (this.config.get['folders']) {
       this.folders = this.config.get['folders'];
     }
-    else if (this.options.folders) {
+    if (this.options.folders) {
       this.folders = this.options.folders;
     }
 
@@ -77,7 +77,7 @@ var SassGenerator = yeoman.generators.Base.extend({
     if (this.config.get['folders']) {
       this.fileTemplate = this.config.get['folders'];
     }
-    else if (this.options.fileTemplate) {
+    if (this.options.fileTemplate) {
       this.fileTemplate = this.options.fileTemplate;
     }
 
@@ -85,7 +85,7 @@ var SassGenerator = yeoman.generators.Base.extend({
     if (this.config.get['folders']) {
       this.partialTemplate = this.config.get['folders'];
     }
-    else if (this.options.partialTemplate) {
+    if (this.options.partialTemplate) {
       this.partialTemplate = this.options.partialTemplate;
     }
 
