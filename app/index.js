@@ -9,36 +9,33 @@ var welcome = require('./welcome.js');
 
 var SassGenerator = yeoman.generators.Base.extend({
   init: function () {
+    var gems = {
+      'sass': '~>3.4',
+      'compass': '~>1.0',
+      'singularitygs': '~>1.4',
+      'breakpoint': '~>2.5'
+    };
 
-    this.on('end', function () {
-      if (!this.options['skip-install']) {
-        
+    this.composeWith('sass:compass', {
+      options: {
+        gems: gems,
+        httpPath: './',
+        cssDir: 'css',
+        sassDir: 'sass',
+        imagesDir: 'images',
+        jsDir: 'js',
+        fontsDir: 'fonts',
+        outputStyle: ':expanded',
+        relativeAssets: true,
+        lineComments: false
       }
     });
-  },
 
-  welcome: function() {
-    this.log(welcome.welcome());
-  },
-
-  askFor: function () {
-    var done = this.async();
-
-    var prompts = [
-
-    ];
-
-    this.prompt(prompts, function (props) {
-      this.someOption = props.someOption;
-
-      done();
-    }.bind(this));
-  },
-
-  app: function () {
-  },
-
-  projectfiles: function () {
+    // this.composeWith('sass:bundler', {
+    //   options: {
+    //     gems: gems
+    //   }
+    // });
   }
 });
 

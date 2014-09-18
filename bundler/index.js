@@ -7,7 +7,7 @@ var util = require('util'),
 var settings = {};
 
 var SassGenerator = yeoman.generators.Base.extend({
-  init: function () {
+  initializing: function () {
     this.gems = {};
 
     if (this.config.get['gems']) {
@@ -18,7 +18,7 @@ var SassGenerator = yeoman.generators.Base.extend({
     }
   },
 
-  prompts: function () {
+  prompting: function () {
     var done = this.async(),
         _this = this,
         prompts = [],
@@ -102,13 +102,13 @@ var SassGenerator = yeoman.generators.Base.extend({
     }.bind(this));
   },
 
-  saveSettings: function () {
+  configuring: function () {
     settings.gems = this.gems;
 
     this.config.set(settings);
   },
 
-  buildGemfile: function () {
+  writing: function () {
     var output = '',
         _this = this;
 

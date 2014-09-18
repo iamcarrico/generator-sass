@@ -8,7 +8,7 @@ var settings = {};
 
 
 var SassGenerator = yeoman.generators.Base.extend({
-  init: function () {
+  initializing: function () {
     //////////////////////////////
     // Syntax
     //////////////////////////////
@@ -26,6 +26,9 @@ var SassGenerator = yeoman.generators.Base.extend({
     //////////////////////////////
     this.base = null;
 
+    if (this.config.get['sassDir']) {
+      this.base = this.config.get['sassDir'];
+    }
     if (this.config.get['base']) {
       this.base = this.config.get['base'];
     }
@@ -91,7 +94,7 @@ var SassGenerator = yeoman.generators.Base.extend({
 
   },
 
-  prompts: function () {
+  prompting: function () {
     var done = this.async(),
         prompts = [];
 
@@ -167,7 +170,7 @@ var SassGenerator = yeoman.generators.Base.extend({
     }
   },
 
-  saveSettings: function () {
+  configuring: function () {
     settings = {
       syntax: this.syntax,
       base: this.base,
@@ -179,7 +182,7 @@ var SassGenerator = yeoman.generators.Base.extend({
     this.config.set(settings);
   },
 
-  buildFiles: function () {
+  writing: function () {
     var base = this.base + '/',
         syntax = this.syntax,
         fileTemplate = '_file.scss',
