@@ -22,10 +22,11 @@ var SassGenerator = yeoman.generators.Base.extend({
     var done = this.async(),
         _this = this,
         prompts = [],
-        gems = [];
+        gems = [],
+        gemKeys = Object.keys(this.gems);
 
-    if (Object.keys(this.gems).length) {
-      done();
+   if (gemKeys.indexOf('sass') > -1 || gemKeys.indexOf('compass') > -1) {
+      return done();
     }
 
     prompts.push({
@@ -90,22 +91,20 @@ var SassGenerator = yeoman.generators.Base.extend({
           addGem();
         }
         else {
-          done();
+          return done();
         }
       }.bind(_this));
     }
 
     this.prompt(prompts, function (props) {
       this.gems['sass'] = props.sassVersion;
-
+      // return done();
       addGem();
     }.bind(this));
   },
 
   configuring: function () {
-    settings.gems = this.gems;
-
-    this.config.set(settings);
+    this.config.set('gems', this.gems);
   },
 
   writing: function () {

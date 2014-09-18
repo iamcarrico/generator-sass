@@ -20,96 +20,105 @@ var SassGenerator = yeoman.generators.Base.extend({
     this.lineComments = null;
     this.sassOptions = null;
 
-    if (this.config.get['gems']) {
+    if (this.config.get['gems'] !== undefined) {
       this.gems = this.config.get['gems'];
     }
-    if (this.options.gems) {
+    if (this.options.gems !== undefined) {
       this.gems = this.options.gems;
     }
 
-    if (this.config.get['httpPath']) {
+    if (this.config.get['httpPath'] !== undefined) {
       this.httpPath = this.config.get['httpPath'];
     }
-    if (this.options.httpPath) {
+    if (this.options.httpPath !== undefined) {
       this.httpPath = this.options.httpPath;
     }
 
-    if (this.config.get['cssDir']) {
+    if (this.config.get['cssDir'] !== undefined) {
       this.cssDir = this.config.get['cssDir'];
     }
-    if (this.options.cssDir) {
+    if (this.options.cssDir !== undefined) {
       this.cssDir = this.options.cssDir;
     }
 
-    if (this.config.get['sassDir']) {
+    if (this.config.get['sassDir'] !== undefined) {
       this.sassDir = this.config.get['sassDir'];
     }
-    if (this.options.sassDir) {
+    if (this.options.sassDir !== undefined) {
       this.sassDir = this.options.sassDir;
     }
 
-    if (this.config.get['imagesDir']) {
+    if (this.config.get['imagesDir'] !== undefined) {
       this.imagesDir = this.config.get['imagesDir'];
     }
-    if (this.options.imagesDir) {
+    if (this.options.imagesDir !== undefined) {
       this.imagesDir = this.options.imagesDir;
     }
 
-    if (this.config.get['jsDir']) {
+    if (this.config.get['jsDir'] !== undefined) {
       this.jsDir = this.config.get['jsDir'];
     }
-    if (this.options.jsDir) {
+    if (this.options.jsDir !== undefined) {
       this.jsDir = this.options.jsDir;
     }
 
-    if (this.config.get['fontsDir']) {
+    if (this.config.get['fontsDir'] !== undefined) {
       this.fontsDir = this.config.get['fontsDir'];
     }
-    if (this.options.fontsDir) {
+    if (this.options.fontsDir !== undefined) {
       this.fontsDir = this.options.fontsDir;
     }
 
-    if (this.config.get['outputStyle']) {
+    if (this.config.get['outputStyle'] !== undefined) {
       this.outputStyle = this.config.get['outputStyle'];
     }
-    if (this.options.outputStyle) {
+    if (this.options.outputStyle !== undefined) {
       this.outputStyle = this.options.outputStyle;
     }
 
-    if (this.config.get['outputDir']) {
+    if (this.config.get['outputDir'] !== undefined) {
       this.outputDir = this.config.get['outputDir'];
     }
-    if (this.options.outputDir) {
+    if (this.options.outputDir !== undefined) {
       this.outputDir = this.options.outputDir;
     }
 
-    if (this.config.get['relativeAssets']) {
+    if (this.config.get['relativeAssets'] !== undefined) {
       this.relativeAssets = this.config.get['relativeAssets'];
     }
-    if (this.options.relativeAssets) {
+    if (this.options.relativeAssets !== undefined) {
       this.relativeAssets = this.options.relativeAssets;
     }
 
-    if (this.config.get['lineComments']) {
+    if (this.config.get['lineComments'] !== undefined) {
       this.lineComments = this.config.get['lineComments'];
     }
-    if (this.options.lineComments) {
+    if (this.options.lineComments !== undefined) {
       this.lineComments = this.options.lineComments;
     }
 
-    if (this.config.get['sassOptions']) {
+    if (this.config.get['sassOptions'] !== undefined) {
       this.sassOptions = this.config.get['sassOptions'];
     }
-    if (this.options.sassOptions) {
+    if (this.options.sassOptions !== undefined) {
       this.sassOptions = this.options.sassOptions;
     }
   },
 
   prompting: function () {
-    var done = this.async,
+    var done = this.async(),
         prompts = [],
         _this = this,
-        ask = false;
+        ask = false,
+        gemKeys = Object.keys(this.gems);
+
+    if (gemKeys.indexOf('compass') === -1) {
+      prompts.push({
+        type: 'string',
+        name: 'compassVersion',
+        message: 'What version of Compass would you like to use?'
+      });
+    }
 
     if (!this.httpPath) {
       ask = true;
@@ -189,7 +198,7 @@ var SassGenerator = yeoman.generators.Base.extend({
       });
     }
 
-    if (this.relativeAssets !== null) {
+    if (this.relativeAssets === null) {
       ask = true;
 
       prompts.push({
@@ -199,7 +208,7 @@ var SassGenerator = yeoman.generators.Base.extend({
       });
     }
 
-    if (this.lineComments !== null) {
+    if (this.lineComments === null) {
       ask = true;
 
       prompts.push({
@@ -210,42 +219,78 @@ var SassGenerator = yeoman.generators.Base.extend({
     }
 
     if (!ask) {
-      done();
+      return done();
     }
 
     this.prompt(prompts, function (props) {
-      this.httpPath = props.httpPath;
-      this.cssDir = props.cssDir;
-      this.sassDir = props.sassDir;
-      this.imagesDir = props.imagesDir;
-      this.jsDir = props.jsDir;
-      this.fontsDir = props.fontsDir;
-      this.outputStyle = props.outputStyle;
-      this.relativeAssets = props.relativeAssets;
-      this.lineComments = props.lineComments;
-      this.sassOptions = props.sassOptions;
+      if (props.compassVersion !== undefined) {
+        this.gems['compass'] = props.compassVersion;
+      }
 
-      done();
-    });
+      if (props.httpPath !== undefined) {
+        this.httpPath = props.httpPath;
+      }
+
+      if (props.cssDir !== undefined) {
+        this.cssDir = props.cssDir;
+      }
+
+      if (props.sassDir !== undefined) {
+        this.sassDir = props.sassDir;
+      }
+
+      if (props.imagesDir !== undefined) {
+        this.imagesDir = props.imagesDir;
+      }
+
+      if (props.jsDir !== undefined) {
+        this.jsDir = props.jsDir;
+      }
+
+      if (props.fontsDir !== undefined) {
+        this.fontsDir = props.fontsDir;
+      }
+
+      if (props.outputStyle !== undefined) {
+        this.outputStyle = props.outputStyle;
+      }
+
+      if (props.relativeAssets !== undefined) {
+        this.relativeAssets = props.relativeAssets;
+      }
+
+      if (props.lineComments !== undefined) {
+        this.lineComments = props.lineComments;
+      }
+
+      if (props.sassOptions !== undefined) {
+        this.sassOptions = props.sassOptions;
+      }
+
+
+      return done();
+    }.bind(this));
   },
 
   configuring: function () {
-    settings = {
-      httpPath: this.httpPath,
-      cssDir: this.cssDir,
-      sassDir: this.sassDir,
-      imagesDir: this.imagesDir,
-      jsDir: this.jsDir,
-      fontsDir: this.fontsDir,
-      outputStyle: this.outputStyle,
-      relativeAssets: this.relativeAssets,
-      lineComments: this.lineComments,
-      sassOptions: this.sassOptions,
-      gems: this.gems
-    }
+    var settings = [
+      'httpPath',
+      'cssDir',
+      'sassDir',
+      'imagesDir',
+      'jsDir',
+      'fontsDir',
+      'outputStyle',
+      'relativeAssets',
+      'lineComments',
+      'sassOptions',
+      'gems'
+    ],
+      _this = this;
 
-    this.config.set(settings);
-    //
+    settings.forEach(function (setting) {
+      _this.config.set(setting, _this[setting]);
+    });
   },
 
   default: function () {
