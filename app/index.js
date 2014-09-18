@@ -8,7 +8,7 @@ var welcome = require('./welcome.js');
 
 
 var SassGenerator = yeoman.generators.Base.extend({
-  init: function () {
+  initializing: function () {
     var gems = {
       'sass': '~>3.4',
       'compass': '~>1.0',

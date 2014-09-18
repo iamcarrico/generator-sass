@@ -249,7 +249,11 @@ var SassGenerator = yeoman.generators.Base.extend({
   },
 
   default: function () {
-    this.composeWith('sass:bundler');
+    this.composeWith('sass:bundler', {
+      options: {
+        gems: this.gems
+      }
+    });
   }
 
   // writing: function () {
