@@ -26,15 +26,12 @@ var SassGenerator = yeoman.generators.Base.extend({
         fontsDir: 'fonts',
         outputStyle: ':expanded',
         relativeAssets: true,
-        lineComments: false
+        lineComments: false,
+        sassOptions: {
+          ':sourcemaps': false
+        }
       }
     });
-
-    // this.composeWith('sass:bundler', {
-    //   options: {
-    //     gems: gems
-    //   }
-    // });
   }
 });
 
