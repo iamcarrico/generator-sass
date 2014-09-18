@@ -303,6 +303,7 @@ var SassGenerator = yeoman.generators.Base.extend({
 
   writing: function () {
     var gemKeys = Object.keys(this.config.get('gems')),
+        dirs = ['cssDir', 'sassDir', 'imagesDir', 'jsDir', 'fontsDir'],
         compassGems = '',
         _this = this;
 
@@ -328,6 +329,10 @@ var SassGenerator = yeoman.generators.Base.extend({
     }
 
     this.template('_config.rb', 'config.rb');
+
+    dirs.forEach(function (dir) {
+      _this.copy('../../structure/templates/gitkeep', _this[dir] + '/' + '.gitkeep');
+    });
   }
 });
 
