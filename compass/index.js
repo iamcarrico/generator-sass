@@ -18,7 +18,7 @@ var SassGenerator = yeoman.generators.Base.extend({
     this.outputStyle = null;
     this.relativeAssets = null;
     this.lineComments = null;
-    this.sassOptions = null;
+    this.sassOptions = {};
 
     if (this.config.get['gems'] !== undefined) {
       this.gems = this.config.get['gems'];
@@ -299,11 +299,36 @@ var SassGenerator = yeoman.generators.Base.extend({
         gems: this.gems
       }
     });
-  }
+  },
 
-  // writing: function () {
-    // this.src.copy('somefile.js', 'somefile.js');
-  // }
+  writing: function () {
+    var gemKeys = Object.keys(this.config.get('gems')),
+        compassGems = '',
+        _this = this;
+
+    gemKeys.forEach(function (gem) {
+      if (gem !== 'sass' && gem !== 'compass') {
+        compassGems += 'require "' + gem + '"\n';
+      }
+    });
+
+    this.compassGems = compassGems;
+
+    if (Object.keys(this.sassOptions).length) {
+      this.optionsPassthrough = 'sass_options = {';
+
+      Object.keys(this.sassOptions).forEach(function (option) {
+        _this.optionsPassthrough += option + ' => ' + _this.sassOptions[option] + ', ';
+      });
+
+      this.optionsPassthrough = this.optionsPassthrough.slice(0, -2) + '}';
+    }
+    else {
+      this.optionsPassthrough = '';
+    }
+
+    this.template('_config.rb', 'config.rb');
+  }
 });
 
 module.exports = SassGenerator;

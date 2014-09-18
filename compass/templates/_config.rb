@@ -15,16 +15,16 @@ javascripts_dir = "<%= jsDir %>"
 fonts_dir = "<%= fontsDir %>"
 
 # You can select your preferred output style here (can be overridden via the command line): One of: :nested, :expanded, :compact, or :compressed
-# output_style = <%= outputStyle %>
+output_style = <%= outputStyle %>
 
 # Determine whether Compass asset helper functions generate relative or absolute paths
 relative_assets = <%= relativeAssets %>
 
-# To disable debugging comments that display the original location of your selectors. Uncomment:
+# Determine whether debugging comments that display the original location of your selectors will be printed (not needed if Source Maps are enabled).
 line_comments = <%= lineComments %>
 
 # Sass Options
-<%= sassOptions %>
+<%= optionsPassthrough %>
 
 #########################
 ## Full documentation:
