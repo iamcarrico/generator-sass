@@ -123,7 +123,7 @@ var SassGenerator = yeoman.generators.Base.extend({
     this.template('_Gemfile', 'Gemfile');
   },
 
-  end: function () {
+  install: function () {
     sh.run('bundle install --path vendor');
   }
 });
