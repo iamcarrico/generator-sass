@@ -296,7 +296,8 @@ var SassGenerator = yeoman.generators.Base.extend({
   default: function () {
     this.composeWith('sass:bundler', {
       options: {
-        gems: this.gems
+        gems: this.gems,
+        'skip-install': this.options['skip-install']
       }
     });
   },

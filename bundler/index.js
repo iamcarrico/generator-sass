@@ -124,7 +124,9 @@ var SassGenerator = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    sh.run('bundle install --path vendor');
+    if (!this.options['skip-install']) {
+      sh.run('bundle install --path vendor');
+    }
   }
 });
 
