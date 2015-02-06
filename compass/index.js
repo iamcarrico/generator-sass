@@ -294,12 +294,14 @@ var SassGenerator = yeoman.generators.Base.extend({
   },
 
   default: function () {
-    this.composeWith('sass:bundler', {
-      options: {
-        gems: this.gems,
-        'skip-install': this.options['skip-install']
-      }
-    });
+    if (!this.options['skip-gemfile']) {
+      this.composeWith('sass:bundler', {
+        options: {
+          gems: this.gems,
+          'skip-install': this.options['skip-install']
+        }
+      });
+    }
   },
 
   writing: function () {
